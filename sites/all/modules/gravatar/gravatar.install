@@ -1,5 +1,5 @@
 <?php
-// $Id: gravatar.install,v 1.1.4.17 2009/04/26 15:47:10 narno Exp $
+// $Id: gravatar.install,v 1.1.4.19 2009/10/18 18:52:23 davereid Exp $
 
 /**
  * @file
@@ -62,7 +62,7 @@ function gravatar_requirements($phase) {
     $default_theme = variable_get('theme_default', 'garland');
     $theme_settings = theme_get_settings($default_theme);
     if (!$theme_settings['toggle_comment_user_picture'] && !$theme_settings['toggle_node_user_picture']) {
-      $notifications[] = t('Make sure user pictures are enabled in your <a href="@theme-settings">theme</a> settings.', array('@theme-settings' => url('admin/build/themes/settings/'. $default_theme)));
+      $notifications[] = t("Make sure user pictures are enabled in your <a href=\"@theme-settings\">theme's settings</a>.", array('@theme-settings' => url('admin/build/themes/settings/' . $default_theme)));
     }
 
     $global_default_image = variable_get('user_picture_default', '');
