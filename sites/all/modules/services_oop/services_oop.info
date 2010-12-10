@@ -1,0 +1,13 @@
+; $Id: services_oop.info,v 1.1 2010/01/26 08:36:20 hugowetterberg Exp $
+name = Services OOP
+description = Utility functions for working with services in a more OOP-friendly manner
+package = Services
+dependencies[] = autoload
+core = "6.x"
+php = "5.2"
+; Information added by drupal.org packaging script on 2010-01-26
+version = "6.x-1.0"
+core = "6.x"
+project = "services_oop"
+datestamp = "1264495206"
+
