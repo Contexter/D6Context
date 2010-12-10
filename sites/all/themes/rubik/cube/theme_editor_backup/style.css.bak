@@ -51,7 +51,7 @@ a {
   text-decoration:none;
   }
 
-.limiter { width:960px; }
+.limiter { width:930px; }
 
 #top { background:url(images/cube.png) 0px -60px repeat-x; }
 
@@ -171,7 +171,7 @@ div.pager,
   }
 
 #header {
-  width:950px;
+  width:930px;
   padding:5px;
   }
 
@@ -256,7 +256,7 @@ div.pager,
  * Page layout ========================================================
  */
 #page {
-  width:950px;
+  width:930px;
   padding:5px;
   background:#f4f4f4;
   -moz-border-radius:3px;
@@ -322,7 +322,7 @@ div.messages,
 .block { margin:5px; }
 
 .block .block-title {
-  background:#fff url(images/cube.png) 0px -190px repeat-x;
+  background:#ccc url(images/cube.png) 0px -190px repeat-x;
   color:#fff;
   }
 
