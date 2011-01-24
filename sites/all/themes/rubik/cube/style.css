@@ -1,41 +1,3 @@
-/**
- * Contact Form Personilization ===========================================================
- */
-
-#address {
-background: #e1e1e1;
-font-size: 14px;
-margin-left: -10px;
-margin-bottom: 20px;
-margin-top:-15px;
-padding: 15px;
-border-radius: 5px;
-
-
-background: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.63, rgb(250,250,250)),
-    color-stop(0.34, rgb(242,242,242))
-);
-background: -moz-linear-gradient(
-    center bottom,
-    rgb(250,250,250) 23%,
-    rgb(242,242,242) 34%
-);
-}
-#address p {
-padding:3px;
-text-align: right;
-}
-
-#address span {
-
-color: red;
-}
-
-
 body,
 input,
 textarea,
@@ -51,7 +13,7 @@ a {
   text-decoration:none;
   }
 
-.limiter { width:930px; }
+.limiter { width:960px; }
 
 #top { background:url(images/cube.png) 0px -60px repeat-x; }
 
@@ -171,7 +133,7 @@ div.pager,
   }
 
 #header {
-  width:930px;
+  width:950px;
   padding:5px;
   }
 
@@ -256,7 +218,7 @@ div.pager,
  * Page layout ========================================================
  */
 #page {
-  width:930px;
+  width:950px;
   padding:5px;
   background:#f4f4f4;
   -moz-border-radius:3px;
@@ -322,7 +284,7 @@ div.messages,
 .block { margin:5px; }
 
 .block .block-title {
-  background:#ccc url(images/cube.png) 0px -190px repeat-x;
+  background:#08c url(images/cube.png) 0px -190px repeat-x;
   color:#fff;
   }
 

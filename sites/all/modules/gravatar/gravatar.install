@@ -1,5 +1,5 @@
 <?php
-// $Id: gravatar.install,v 1.1.4.19 2009/10/18 18:52:23 davereid Exp $
+// $Id: gravatar.install,v 1.1.4.20 2011/01/04 20:20:58 davereid Exp $
 
 /**
  * @file
@@ -35,6 +35,13 @@ function gravatar_uninstall() {
   $variables = array_keys(gravatar_variables());
   foreach ($variables as $variable) {
     variable_del($variable);
+  }
+}
+
+function gravatar_check_requirements() {
+  $requirements = gravatar_requirements('runtime');
+  if (!empty($requirements['gravatar'])) {
+    drupal_set_message(t('Please check the following potential issues: !issues', array('!issues' => $requirements['gravatar']['description'])), 'warning', FALSE);
   }
 }
 

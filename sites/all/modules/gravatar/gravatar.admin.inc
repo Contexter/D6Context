@@ -1,5 +1,5 @@
 <?php
-// $Id: gravatar.admin.inc,v 1.1.2.38 2010/05/31 14:48:10 davereid Exp $
+// $Id: gravatar.admin.inc,v 1.1.2.39 2011/01/04 20:20:58 davereid Exp $
 
 /**
  * @file
@@ -12,6 +12,25 @@
  * @see system_settings_form()
  */
 function gravatar_admin_settings() {
+  $form['gravatar_default'] = array(
+    '#type' => 'radios',
+    '#title' => t('Default image'),
+    '#description' => t('Specifies an image that should be returned if either the requested e-mail address has no associated gravatar, or that gravatar has a rating higher than is allowed by the maturity filter.'),
+    '#options' => array(
+      GRAVATAR_DEFAULT_GLOBAL => t('Global default user image'),
+      GRAVATAR_DEFAULT_MODULE => t('Module default image (white background)'),
+      GRAVATAR_DEFAULT_MODULE_CLEAR => t('Module default image (transparent background)'),
+      GRAVATAR_DEFAULT_MYSTERY_MAN => t('Gravatar.com mystery man'),
+      GRAVATAR_DEFAULT_LOGO => t('Gravatar.com logo'),
+      GRAVATAR_DEFAULT_IDENTICON => t('Gravatar.com identicon (generated)'),
+      GRAVATAR_DEFAULT_MONSTERID => t('Gravatar.com monsterid (generated)'),
+      GRAVATAR_DEFAULT_WAVATAR => t('Gravatar.com wavatar (generated)'),
+      GRAVATAR_DEFAULT_RETRO => t('Gravatar.com retro 8-bit arcade-style pixelated faces (generated)'),
+    ),
+    '#default_value' => variable_get('gravatar_default', GRAVATAR_DEFAULT_MODULE),
+    '#prefix' => '<div class="picture js-show">' . theme('image', '', t('Default picture example'), t('Default picture example'), array('id' => 'gravatar-imagepreview'), FALSE) . '</div>',
+    '#process' => array('expand_radios', 'gravatar_process_default_setting'),
+  );
   $form['gravatar_size'] = array(
     '#type' => 'item',
     '#title' => t('Image size'),
@@ -28,24 +47,7 @@ function gravatar_admin_settings() {
       t('X: May contain hardcore sexual imagery or extremely disturbing violence.'),
     )),
     '#options' => drupal_map_assoc(array('G', 'PG', 'R', 'X')),
-    '#default_value' => gravatar_var('rating'),
-  );
-  $form['gravatar_default'] = array(
-    '#type' => 'radios',
-    '#title' => t('Default image'),
-    '#description' => t('Specifies an image that should be returned if either the requested e-mail address has no associated gravatar, or that gravatar has a rating higher than is allowed by the maturity filter.'),
-    '#options' => array(
-      GRAVATAR_DEFAULT_GLOBAL => t('Global default user image'),
-      GRAVATAR_DEFAULT_MODULE => t('Module default (white background)'),
-      GRAVATAR_DEFAULT_MODULE_CLEAR => t('Module default (transparent background)'),
-      GRAVATAR_DEFAULT_IDENTICON => t('Identicon (generated)'),
-      GRAVATAR_DEFAULT_WAVATAR => t('Wavatar (generated)'),
-      GRAVATAR_DEFAULT_MONSTERID => t('MonsterID (generated)'),
-      GRAVATAR_DEFAULT_LOGO => t('Gravatar logo'),
-    ),
-    '#default_value' => gravatar_var('default'),
-    '#prefix' => '<div class="picture js-show">' . theme('image', '', t('Default picture example'), t('Default picture example'), array('id' => 'gravatar-imagepreview'), FALSE) . '</div>',
-    '#process' => array('expand_radios', 'gravatar_process_default_setting'),
+    '#default_value' => variable_get('gravatar_rating', 'G'),
   );
 
   // Add JavaScript and CSS to swap the defalut image previews.
@@ -80,7 +82,7 @@ function gravatar_admin_settings() {
 function gravatar_process_default_setting($element) {
   $element[GRAVATAR_DEFAULT_GLOBAL]['#description'] = t('This setting can be adjusted in the <a href="@user-picture-link">user pictures settings</a>.', array('@user-picture-link' => url('admin/user/settings', array('fragment' => 'edit-user-picture-default'))));
 
-  // If the global user picture is empty, disable that default picture option.
+  // If the global user picture is empty, disable the respective option.
   if (!variable_get('user_picture_default', '')) {
     $element[GRAVATAR_DEFAULT_GLOBAL]['#disabled'] = TRUE;
     $element[GRAVATAR_DEFAULT_GLOBAL]['#description'] = t('There currently is not a global default user picture specified.') . ' ' . $element[GRAVATAR_DEFAULT_GLOBAL]['#description'];
@@ -88,13 +90,18 @@ function gravatar_process_default_setting($element) {
 
   foreach ($element['#options'] as $key => $choice) {
     // Add an image to preview this default image option.
-    $attributes = array(
-      'id' => 'gravatar-imagepreview-'. $key,
-      // Hide the image if the respective option is disabled.
-      'class' => $choice['#disabled'] ? 'hide' : 'js-hide',
+    $options = array(
+      'path' => gravatar_get_gravatar(mt_rand(), array('default' => _gravatar_get_default_image($key), 'force default' => TRUE)),
+      'alt' => $choice,
+      'title' => $choice,
+      'attributes' => array(
+        'id' => 'gravatar-imagepreview-'. $key,
+        // Hide the image if the respective option is disabled.
+        'class' => $choice['#disabled'] ? 'hide' : 'js-hide',
+      ),
+      'getsize' => FALSE,
     );
-    $choice_gravatar = gravatar_get_gravatar(mt_rand(), array('default' => _gravatar_get_default_image($key)));
-    $element[$key]['#suffix'] = theme('image', $choice_gravatar, $choice, $choice, $attributes, FALSE);
+    $element[$key]['#suffix'] = theme('image', $options['path'], $options['alt'], $options['title'], $options['attributes'], $options['getsize']);
   }
 
   return $element;
