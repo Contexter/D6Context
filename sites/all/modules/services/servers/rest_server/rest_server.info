@@ -1,8 +1,10 @@
-; $Id: xmlrpc_server.info,v 1.6.2.3 2010/10/13 19:02:45 heyrocker Exp $
-name = XMLRPC Server
-description = Provides an XMLRPC server.
+; $Id: rest_server.info,v 1.1.2.2 2010/10/13 19:02:45 heyrocker Exp $
+name = REST Server
+description = Provides an REST server.
 package = Services - servers
 dependencies[] = services
+dependencies[] = inputstream
+dependencies[] = autoload
 core = 6.x
 ; Information added by drupal.org packaging script on 2010-12-24
 version = "6.x-3.0-beta2"
