@@ -1,0 +1,7 @@
+/* $Id: services.css,v 1.4.2.2 2010/10/13 19:02:45 heyrocker Exp $ */
+
+#service-browser-arguments .type {
+  width: 40px;
+  display: block;
+  float: left;
+}
